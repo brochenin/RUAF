@@ -1,0 +1,7 @@
+"input file",mycourse-1_step-activity.csv
+"features output file",mycourse-1_result.csv
+"number of seconds under which an activity is ignored",60
+"number of seconds after which an activity is seen as too long",600
+"drop out threshold",3
+"come back threshold",3
+"late or early threshold",2

@@ -1,0 +1,4 @@
+cd $(dirname "$0")
+python3 FutureLearnProcess.py SETTINGS.csv graph/data.csv
+cd ./graph
+pdflatex graphs.tex
