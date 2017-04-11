@@ -12,7 +12,6 @@ __________________________________
 "input file",mycourse-1_step-activity.csv
 "features output file",mycourse-1_result.csv
 "number of seconds under which an activity is ignored",60
-"number of seconds after which an activity is seen as too long",600
 "drop out threshold",3
 "come back threshold",3
 "late or early threshold",2
@@ -24,8 +23,7 @@ Only the items after the comma can be edited. The order of the items should not 
 
 The user may also edit the other parameters if they wish:
 - The "number of seconds under which an activity is ignored" is the minimum amount of time a user should spend on a resource. Under this minimum, the user is considered as having ignored a resource.
-- The "number of seconds after which an activity is seen as too long", is the maximum amount of time a user can spend on a resource for the decile computation. Above this maximum, the user is considered to have only spent this maximum time on the resource.
-- The "drop out threshold" is 1/t, where t is the proportion of resources a user must have done after some point in order to not be considered dropping out (see article for details).
+- The "drop out threshold" is 1/t, where t is the proportion of resources a user must have done after some point in order to not be considered dropping out (see article for details). Here, with 3, the proportion of resources that must have been done is 1/3.
 - The "come back threshold" is the amount of other resources a user mus have seen before coming bac to another in order to be counted in the 'drop' feature.
 - The "late or early threshold" is the threshold used used for the computation of the 'late' and 'early' features (see article for details).
 

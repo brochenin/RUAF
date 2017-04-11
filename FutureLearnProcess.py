@@ -22,7 +22,7 @@ if len(sys.argv) == 1:
     inputFile = "input.csv"
     outputFile = "output.csv"
     noticeTreshhold = 60 # number of seconds under which an activity is ignored
-    maxGraphLength = 600 # number of seconds after which an activity is seen as too long
+#    maxGraphLength = 600 # number of seconds after which an activity is seen as too long
     dropOutTreshhold = 3
     comeBackMin = 3
     lateEarlyTreshhold = 2
@@ -33,10 +33,10 @@ else:
     inputFile = allSettings[0][1]
     outputFile = allSettings[1][1]
     noticeTreshhold = int(allSettings[2][1])#60 # number of seconds under which an activity is ignored
-    maxGraphLength = int(allSettings[3][1])#600 # number of seconds after which an activity is seen as too long
-    dropOutTreshhold = float(allSettings[4][1])#3
-    comeBackMin = int(allSettings[5][1])#3
-    lateEarlyTreshhold = int(allSettings[6][1])#2
+#    maxGraphLength = int(allSettings[3][1])#600 # number of seconds after which an activity is seen as too long
+    dropOutTreshhold = float(allSettings[3][1])#3
+    comeBackMin = int(allSettings[4][1])#3
+    lateEarlyTreshhold = int(allSettings[5][1])#2
 
 
 #### Get data from file
@@ -156,15 +156,24 @@ for activity in UserActivity.totalList:
 
 # Remove empty users
 for user in User.list:
+    user.toRemove = False
+for activity in UserActivity.totalList:
+    activity.toRemove = False
+for user in User.list:
     activitiesTotal = 0
     for activity in user.totalListOfActivities:
         if activity.noticeable:
             activitiesTotal += 1
     if activitiesTotal == 0:
-        User.list.remove(user)
+        user.toRemove = True
         for activity in user.totalListOfActivities:
-            UserActivity.totalList.remove(activity)
-            ActivityType.finder[activity.number].totalListOfActivities.remove(activity)
+            activity.toRemove = True
+
+User.list = [item for item in User.list if not item.toRemove]
+UserActivity.totalList = [item for item in UserActivity.totalList if not item.toRemove]
+UserActivity.list = [item for item in UserActivity.list if not item.toRemove]
+for activ in ActivityType.list:
+    activ.totalListOfActivities = [item for item in activ.totalListOfActivities if not item.toRemove]
 
 
 print("Preprocessed")
