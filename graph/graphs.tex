@@ -3,6 +3,29 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.8}
 \pgfplotsset{yticklabel style={text width=3em,align=right}}
+\pgfplotsset{
+    exclusively/.style 2 args={
+    x filter/.code={
+        \edef\weekofmyrow{\thisrow{#1}}
+        \edef\weektocheck{#2}
+        \ifx\weekofmyrow\weektocheck
+        \else\def\pgfmathresult{nan}
+        \fi
+    }
+    }
+}
+\newcommand{\oddweekplot}[3]{
+\addplot[bar shift=0pt,fill=blue!55!white]
+    table[x=ID, y=#2, col sep=comma,
+    exclusively={week}{#3}
+    ]{data.csv};
+}
+\newcommand{\evenweekplot}[3]{
+\addplot[bar shift=0pt,fill=blue!30!white]
+    table[x=ID, y=#2, col sep=comma,
+    exclusively={week}{#3}
+    ]{data.csv};
+}
 \newcommand{\addtikz}[2]{
 \begin{tikzpicture}
 \begin{axis}
@@ -12,20 +35,38 @@
          xmajorgrids=false,
          scaled y ticks=false,
          xtick={},
-   yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+         yticklabel={\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
          bar width=1,
          ylabel={#2},
-         xlabel={Resource ID}
+         xlabel={Resource ID},
         ]
-\addplot
-    table[x=ID, y=#2, col sep=comma]{data.csv};
+\oddweekplot{#1}{#2}{1}
+\evenweekplot{#1}{#2}{2}
+\oddweekplot{#1}{#2}{3}
+\evenweekplot{#1}{#2}{4}
+\oddweekplot{#1}{#2}{5}
+\evenweekplot{#1}{#2}{6}
+\oddweekplot{#1}{#2}{7}
+\evenweekplot{#1}{#2}{8}
+\oddweekplot{#1}{#2}{9}
+\evenweekplot{#1}{#2}{10}
+\oddweekplot{#1}{#2}{11}
+\evenweekplot{#1}{#2}{12}
+\oddweekplot{#1}{#2}{13}
+\evenweekplot{#1}{#2}{14}
+\oddweekplot{#1}{#2}{15}
+\evenweekplot{#1}{#2}{16}
+\oddweekplot{#1}{#2}{17}
+\evenweekplot{#1}{#2}{18}
+\oddweekplot{#1}{#2}{19}
+\evenweekplot{#1}{#2}{20}
 \end{axis}
 \end{tikzpicture}
 }
 \newcommand{\addtable}[2]{
 \begin{figure}[ht!]
 {\addtikz{#1}{#2}}
-\caption{#2 for each resouce}
+\caption{#2 for each resource}
 \end{figure}
 }
 \newcommand{\intaddtikz}[2]{
@@ -49,7 +90,7 @@
 \newcommand{\intaddtable}[2]{
 \begin{figure}[ht!]
 {\intaddtikz{#1}{#2}}
-\caption{#2 learners for each resouce}
+\caption{#2 learners for each resource}
 \end{figure}
 }
 
