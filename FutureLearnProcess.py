@@ -74,8 +74,9 @@ print("Imported")
 class ActivityType:
     list = []
     finder = {}
-    def __init__(self,ID):
+    def __init__(self,ID,week):
         self.number = ID
+        self.week = week
         self.totalListOfActivities = []
         ActivityType.list.append(self)
         ActivityType.finder[ID] = self
@@ -107,7 +108,11 @@ class UserActivity:
         activ.totalListOfActivities.append(self)
         UserActivity.totalList.append(self)
 for userID in list(set([line[0] for line in processed])): User(userID)
-for activ in range(numActivity): ActivityType(activ+1)
+for week in range(numWeeks):
+    base = sum(numSteps[:week])
+    for activ in range(numSteps[week]):
+        ActivityType(base+activ+1,week+1)
+
 
 # Import all the data in these classes, line by line from the data in a table
 def addActivity(line):
@@ -378,12 +383,12 @@ def outputTo(file,table):
 #decile = ["Decile"+str(k) for k in range(11)]
 basic = ["Active","Drop","Skip","Back"]
 extra = ["Early","Late","Peek","Total"]
-header = ["ID"]+basic+extra#+decile
+header = ["ID","week"]+basic+extra#+decile
 def outputLine(activ):
     basic = [activ.stillHere,activ.dropPointProp,activ.skippedProp,activ.comeBackToProp]
 #    decile = activ.decile
     extra = [activ.doneEarlyProp,activ.doneLaterProp,activ.peekedProp,len(User.list)]
-    return [activ.number]+basic+extra#+decile
+    return [activ.number,activ.week]+basic+extra#+decile
 output = [outputLine(activ) for activ in ActivityType.list]
 
 # export
