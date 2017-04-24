@@ -66,7 +66,8 @@
 \newcommand{\addtable}[2]{
 \begin{figure}[ht!]
 {\addtikz{#1}{#2}}
-\caption{#2 for each resource}
+\caption{`#2' for each resource}
+\label{#1#2}
 \end{figure}
 }
 \newcommand{\intaddtikz}[2]{
@@ -91,15 +92,35 @@
 \begin{figure}[ht!]
 {\intaddtikz{#1}{#2}}
 \caption{#2 learners for each resource}
+\label{#1#2}
 \end{figure}
 }
 
 \begin{document}
+Figure \ref{Active} contains the graph of the number of learners that are
+still active at each resource.
+
 \intaddtable{}{Active}
+
+Figures \ref{Drop}, \ref{Skip}, \ref{Back},
+\ref{Early}, and \ref{Late} contain respectively the graphs of the
+features `drop', `skip', `back', `early', and `late' for each resource.
+They are features computed as a
+proportion of the number of active learners. Figure \ref{Peek} contains the graph
+of the feature `peek', which is computed as a proportion of all learners. In
+these six figures, the change of week is shown by changing the shade of
+blue. The even weeks are lighter than the odd weeks.
+
 \addtable{}{Drop}
+
 \addtable{}{Skip}
+
 \addtable{}{Back}
+
 \addtable{}{Early}
+
 \addtable{}{Late}
+
 \addtable{}{Peek}
+
 \end{document}
